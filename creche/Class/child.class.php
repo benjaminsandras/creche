@@ -37,20 +37,6 @@ class Child
 
     }
 
-    public function delete($id){
-
-        try{
-            $bdd = new PDO('mysql:host=localhost;dbname=creche;charset=utf8', 'benji', 'aqwsedcft7777');
-        }
-        catch (Exception $e){
-			die('Erreur : ' . $e->getMessage());
-        }
-        
-        $bdd->query("DELETE FROM children WHERE children_id = ".$id);
-    }
-    
-
-
 }
     
 

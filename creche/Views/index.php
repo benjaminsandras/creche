@@ -12,14 +12,14 @@
 <body>
 
     <div class="container">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-        LISTE DES ENFANTS
-        </div>
-        <div class="col-sm-4"></div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+             LISTE DES ENFANTS
+            </div>
+            <div class="col-sm-4"></div>
     </div>
-    </div>
+    
 
     <div class="row">
         <div class="col-sm-2">
@@ -36,30 +36,45 @@
       <th scope="col"></th>
       <th scope="col">prénom</th>
       <th scope="col">nom</th>
+      <th scope="col"></th>
       <th scope="col">supprimer</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
 
 <?php  
     require_once '../Class/child.class.php';
-
+    
         try{
             $bdd = new PDO('mysql:host=localhost;dbname=creche;charset=utf8', 'benji', 'aqwsedcft7777');
 		}
 
 		catch (Exception $e){
-			die('Erreur : ' . $e->getMessage());
-		}
+            die('Erreur : ' . $e->getMessage());
+        }
         
-        $reponse = $bdd->query('SELECT *FROM children');
+
+        if (isset($_GET['delete'])) {
+            try{
+                $bdd = new PDO('mysql:host=localhost;dbname=creche;charset=utf8', 'benji', 'aqwsedcft7777');
+            }
+            catch (Exception $e){
+                die('Erreur : ' . $e->getMessage());
+            }
+    
+            $id = $_GET['input2'];
+            $id = intval($id);
+            $bdd->query("DELETE FROM children WHERE children_id = ".$id);
+
+            $reponse = $bdd->query('SELECT *FROM children');
         	
             $cmpt = 0;
         while($donnees=$reponse->fetch()) {
             $cmpt++;
             echo 
                 '<tr>
-                    <th scope="row">'.$donnees['children_id'].'</th>
+                    <th scope="row">'.$cmpt.'</th>
                     <form action="dispChild.php" method="get">
                         <td>
                             <button class="btn btn-light " name="see" type="submit" >'.$donnees['children_firstname'].'</button>
@@ -69,16 +84,54 @@
                         </td>
                         <td>
                             <input class="invisible" name="input" value=' . $donnees['children_id'] . '>
+                        </td>
+                        </form> 
+                        <form method="get">
+                        <td>
                             <button class="btn btn-danger" name="delete" type="submit">X</button>
                         </td>
-                    </form> 
+                        <td>
+                            <input class="invisible" name="input2" value=' . $donnees['children_id'] . '>
+                        </td>
+                        </form>
+                    
+                </tr>';
+        };
+        }else{
+        
+        $reponse = $bdd->query('SELECT *FROM children');
+        	
+            $cmpt = 0;
+        while($donnees=$reponse->fetch()) {
+            $cmpt++;
+            echo 
+                '<tr>
+                    <th scope="row">'.$cmpt.'</th>
+                    <form action="dispChild.php" method="get">
+                        <td>
+                            <button class="btn btn-light " name="see" type="submit" >'.$donnees['children_firstname'].'</button>
+                            
+                        </td> 
+                        <td>'.$donnees['children_lastname'].'
+                        </td>
+                        <td>
+                            <input class="invisible" name="input" value=' . $donnees['children_id'] . '>
+                        </td>
+                        </form> 
+                        <form method="get">
+                        <td>
+                            <button class="btn btn-danger" name="delete" type="submit">X</button>
+                        </td>
+                        <td>
+                            <input class="invisible" name="input2" value=' . $donnees['children_id'] . '>
+                        </td>
+                        </form>
+                    
                 </tr>';
         };
 
-        // if (isset($_GET['see'])) {
-    
-        //     $id = $_GET['input'];
-        //     $id = intval($id);
+    }
+
     
  ?>
     </tbody>
@@ -101,7 +154,7 @@
 
 
 
-
+</div>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

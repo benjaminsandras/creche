@@ -35,6 +35,9 @@
     <tr>
       <th scope="col"></th>
       <th scope="col">Activitées</th>
+      <th scope="col"></th>
+      <th scope="col">supprimer</th>
+      <th scope="col"></th>
       
     </tr>
   </thead>
@@ -58,16 +61,38 @@
             $cmpt++;
             echo 
                 '<tr>
-                    <th scope="row">'.$donnees['activity_id'].'</th>
+                    <th scope="row">'.$cmpt.'</th>
                     <form action="dispAct.php" method="get">
                         <td>
                             <button class="btn btn-light " name="seeact" type="submit" >'.$donnees['activity_name'].'</button>
-                            <input class="invisible" name="inputact" value=' . $donnees['activity_id'] . '>
                         </td> 
+                        <td>
+                            <input class="invisible" name="inputact" value=' . $donnees['activity_id'] . '>
+                        </td>
                     </form> 
+                    <form method="get">
+                        <td>
+                            <button class="btn btn-danger" name="deleteact" type="submit">X</button>
+                        </td>
+                        <td>
+                            <input class="invisible" name="inputact2" value=' . $donnees['activity_id'] . '>
+                        </td>
+                    </form>
                 </tr>';
         };
+        
+        if (isset($_GET['deleteact'])) {
+            try{
+                $bdd = new PDO('mysql:host=localhost;dbname=creche;charset=utf8', 'benji', 'aqwsedcft7777');
+            }
+            catch (Exception $e){
+                die('Erreur : ' . $e->getMessage());
+            }
     
+            $id = $_GET['inputact2'];
+            $id = intval($id);
+            $bdd->query("DELETE FROM activity WHERE activity_id = ".$id);
+        };
  ?>
     </tbody>
 </table>
