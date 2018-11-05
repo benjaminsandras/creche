@@ -72,19 +72,14 @@ if (isset($_GET['see'])) {
     while($donnees=$reponse->fetch()) {
         echo    
             '<div class="card" style="width: 18rem;">
-            <form method="post">
+            
             <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-6>
-                        <textarea name="firstname">'.$donnees['children_firstname'].'</textarea>
-                    </div>
-                    <div class="col-sm-6>
-                        <textarea name="lastname"> ' .$donnees['children_lastname'].'</textarea>
-                    </div>
-                </div>
+                
+                        '.$donnees['children_firstname'].' '.$donnees['children_lastname'].'
+                    
             </div>
                 <ul class="list-group list-group-flush">
-                    
+                    <form method="post">
                         <li class="list-group-item"><textarea name="birthday">'.$donnees['children_birthday'].'</textarea></li>
                         <li class="list-group-item"><textarea name="adress">'.$donnees['children_adress'].'</textarea></li>
                         <li class="list-group-item"><textarea name="parents_contact">'.$donnees['children_parents_contact'].'</textarea></li>
@@ -103,19 +98,14 @@ if (isset($_GET['see'])) {
     while($donnees=$reponse->fetch()) {
         echo    
             '<div class="card" style="width: 18rem;">
-            <form method="post">
+            
             <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-6>
-                        <textarea name="firstname">'.$donnees['children_firstname'].'</textarea>
-                    </div>
-                    <div class="col-sm-6>
-                        <textarea name="lastname"> ' .$donnees['children_lastname'].'</textarea>
-                    </div>
-                </div>
+           
+                        '.$donnees['children_firstname'].' '.$donnees['children_lastname'].'
+         
             </div>
                 <ul class="list-group list-group-flush">
-                    
+                    <form method="post">
                         <li class="list-group-item"><textarea name="birthday">'.$donnees['children_birthday'].'</textarea></li>
                         <li class="list-group-item"><textarea name="adress">'.$donnees['children_adress'].'</textarea></li>
                         <li class="list-group-item"><textarea name="parents_contact">'.$donnees['children_parents_contact'].'</textarea></li>

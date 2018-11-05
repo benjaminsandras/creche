@@ -44,6 +44,24 @@ if (isset($_GET['seeact'])) {
     
     $id = $_GET['inputact'];
     $id = intval($id);
+
+    if (isset($_POST['modifyact'])) {
+    
+    
+        $id = $_POST['input'];
+     
+        $type = $_POST['type'];
+        $number_max_child = $_POST['number_max_child'];
+     
+
+        $bdd->query("
+        UPDATE
+        activity
+        SET
+        activity_type = '".$type."',
+        activity_number_max_child = '".$number_max_child."'
+        WHERE
+        activity_id = ".$id);
     $reponse = $bdd->query('SELECT * FROM activity WHERE activity_id='.$id) ;
                    
     while($donnees=$reponse->fetch()) {
@@ -53,12 +71,37 @@ if (isset($_GET['seeact'])) {
                 '.$donnees['activity_name'].'
             </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">'.$donnees['activity_type'].'</li>
-                    <li class="list-group-item">'.$donnees['activity_number_max_child'].'</li>
+                    <form method="post">
+                    <li class="list-group-item"><textarea name="type">'.$donnees['activity_type'].'</textarea></li>
+                    <li class="list-group-item"><textarea name="number_max_child">'.$donnees['activity_number_max_child'].'</textarea></li>
+                    <input class="invisible" name="input" value=' . $id . '>
+                    <button class="btn btn-info" name="modifyact" type="submit">modifier</button>
+                    </form>
                 </ul>
             </div>';
  
     };
+}else{
+    $reponse = $bdd->query('SELECT * FROM activity WHERE activity_id='.$id) ;
+                   
+    while($donnees=$reponse->fetch()) {
+        echo    
+            '<div class="card" style="width: 18rem;">
+            <div class="card-header">
+                '.$donnees['activity_name'].'
+            </div>
+                <ul class="list-group list-group-flush">
+                    <form method="post">
+                    <li class="list-group-item"><textarea name="type">'.$donnees['activity_type'].'</textarea></li>
+                    <li class="list-group-item"><textarea name="number_max_child">'.$donnees['activity_number_max_child'].'</textarea></li>
+                    <input class="invisible" name="input" value=' . $id . '>
+                    <button class="btn btn-info" name="modifyact" type="submit">modifier</button>
+                    </form>
+                </ul>
+            </div>';
+    };
+
+}
 
 };
   

@@ -52,7 +52,20 @@
 
 		catch (Exception $e){
 			die('Erreur : ' . $e->getMessage());
-		}
+        }
+        
+        if (isset($_GET['deleteact'])) {
+            try{
+                $bdd = new PDO('mysql:host=localhost;dbname=creche;charset=utf8', 'benji', 'aqwsedcft7777');
+            }
+            catch (Exception $e){
+                die('Erreur : ' . $e->getMessage());
+            }
+    
+            $id = $_GET['inputact2'];
+            $id = intval($id);
+            $bdd->query("DELETE FROM activity WHERE activity_id = ".$id);
+        
         
         $reponse = $bdd->query('SELECT *FROM activity');
         	
@@ -80,19 +93,37 @@
                     </form>
                 </tr>';
         };
+    }else{
+
+        $reponse = $bdd->query('SELECT *FROM activity');
+        	
+        $cmpt = 0;
+    while($donnees=$reponse->fetch()) {
+        $cmpt++;
+        echo 
+            '<tr>
+                <th scope="row">'.$cmpt.'</th>
+                <form action="dispAct.php" method="get">
+                    <td>
+                        <button class="btn btn-light " name="seeact" type="submit" >'.$donnees['activity_name'].'</button>
+                    </td> 
+                    <td>
+                        <input class="invisible" name="inputact" value=' . $donnees['activity_id'] . '>
+                    </td>
+                </form> 
+                <form method="get">
+                    <td>
+                        <button class="btn btn-danger" name="deleteact" type="submit">X</button>
+                    </td>
+                    <td>
+                        <input class="invisible" name="inputact2" value=' . $donnees['activity_id'] . '>
+                    </td>
+                </form>
+            </tr>';
+    };
+
+    }
         
-        if (isset($_GET['deleteact'])) {
-            try{
-                $bdd = new PDO('mysql:host=localhost;dbname=creche;charset=utf8', 'benji', 'aqwsedcft7777');
-            }
-            catch (Exception $e){
-                die('Erreur : ' . $e->getMessage());
-            }
-    
-            $id = $_GET['inputact2'];
-            $id = intval($id);
-            $bdd->query("DELETE FROM activity WHERE activity_id = ".$id);
-        };
  ?>
     </tbody>
 </table>
