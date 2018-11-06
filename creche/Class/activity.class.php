@@ -1,7 +1,7 @@
 <?php 
 
 
-// Nous créons une classe « Child ».
+// Nous créons une classe « Activity ».
 class Activity
 {
     private $name;
